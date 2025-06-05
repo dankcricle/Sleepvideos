@@ -1,307 +1,510 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Membership Site Demo</title>
-<style>
-  /* Basic reset and fonts */
-  body, html {
-    margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background: #0d1117;
-    color: #c9d1d9;
-  }
-  nav {
-    background: #161b22;
-    padding: 1em 2em;
-    display: flex;
-    gap: 1.5em;
-  }
-  nav a {
-    color: #58a6ff;
-    text-decoration: none;
-    font-weight: 600;
-  }
-  nav a:hover {
-    text-decoration: underline;
-  }
-  main {
-    max-width: 700px;
-    margin: 2em auto;
-    padding: 0 1em;
-  }
-  h1 {
-    font-size: 2.5rem;
-    text-align: center;
-    color: #79c0ff;
-    text-shadow: 0 0 8px #79c0ff;
-  }
-  .welcome-note {
-    margin-top: 1rem;
-    color: #39d353;
-    text-align: center;
-    font-weight: bold;
-    font-size: 1.2rem;
-    text-shadow: 0 0 6px #39d353;
-  }
-  .btn-group {
-    margin: 2rem 0;
-    display: flex;
-    justify-content: center;
-    gap: 2rem;
-  }
-  button {
-    padding: 1em 2em;
-    font-size: 1.2rem;
-    border-radius: 8px;
-    border: none;
-    cursor: pointer;
-    font-weight: 700;
-    color: #0d1117;
-    background: #79c0ff;
-    box-shadow: 0 0 8px #79c0ff;
-    transition: background 0.3s ease;
-  }
-  button:hover {
-    background: #388bfd;
-  }
-  /* Pages hidden by default */
-  .page {
-    display: none;
-  }
-  .page.active {
-    display: block;
-  }
-  /* Payment options styling */
-  .payment-option {
-    border: 2px solid #58a6ff;
-    border-radius: 10px;
-    padding: 1.2em;
-    margin: 1em 0;
-    cursor: pointer;
-    user-select: none;
-    transition: background 0.3s, box-shadow 0.3s;
-  }
-  .payment-option.selected {
-    background: #58a6ff;
-    color: #0d1117;
-    box-shadow: 0 0 12px #58a6ff;
-  }
-  .upload-section {
-    margin-top: 1.5em;
-  }
-  input[type="file"] {
-    margin-top: 0.5em;
-  }
-  .qr-code {
-    display: block;
-    margin: 1em auto;
-    max-width: 200px;
-    border-radius: 12px;
-    box-shadow: 0 0 10px #79c0ff;
-  }
-  .payment-instructions {
-    text-align: center;
-    font-weight: 600;
-    margin-top: 1em;
-    color: #79c0ff;
-  }
-  .footer {
-    text-align: center;
-    margin-top: 3em;
-    color: #484f58;
-    font-size: 0.9rem;
-  }
-  .warning-note {
-    text-align: center;
-    color: #f0a500;
-    font-weight: 700;
-    margin-top: 1em;
-    text-shadow: 0 0 6px #f0a500;
-  }
-</style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>SpyFlix - Demo & Locked Videos</title>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;500;700&display=swap" rel="stylesheet" />
+  <style>
+    /* Background image from https://unsplash.com/photos/2JIvboGLeho (blurred dark) */
+    body {
+      margin: 0;
+      font-family: 'Roboto', sans-serif;
+      background: url('https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1470&q=80') no-repeat center center fixed;
+      background-size: cover;
+      color: #fff;
+      backdrop-filter: brightness(0.4);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    header {
+      background-color: rgba(0, 0, 0, 0.85);
+      padding: 0.8rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.8);
+    }
+
+    /* Logo merged inside login button */
+    #loginBtn {
+      background-color: #e50914;
+      border: none;
+      color: white;
+      font-weight: 700;
+      padding: 0.5rem 1.5rem;
+      font-size: 1.3rem;
+      border-radius: 6px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 0.7rem;
+      user-select: none;
+      transition: background-color 0.3s ease;
+    }
+    #loginBtn:hover {
+      background-color: #f40612;
+    }
+    #loginBtn svg {
+      fill: white;
+      width: 28px;
+      height: 28px;
+      flex-shrink: 0;
+    }
+
+    /* Navigation buttons separate container */
+    .nav-buttons {
+      display: flex;
+      gap: 1rem;
+    }
+    .nav-buttons button {
+      background-color: transparent;
+      border: 2px solid #e50914;
+      color: #e50914;
+      padding: 0.4rem 1.2rem;
+      font-weight: 600;
+      font-size: 1rem;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background-color 0.3s ease, color 0.3s ease;
+    }
+    .nav-buttons button:hover {
+      background-color: #e50914;
+      color: white;
+    }
+
+    main {
+      max-width: 1000px;
+      margin: 2rem auto 3rem auto;
+      padding: 0 1rem;
+      flex-grow: 1;
+      background: rgba(0,0,0,0.7);
+      border-radius: 12px;
+      box-shadow: 0 0 15px #e50914aa;
+    }
+
+    h2 {
+      border-left: 5px solid #e50914;
+      padding-left: 0.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .videos-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .video-card {
+      background: #222;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.7);
+      position: relative;
+      padding-bottom: 56.25%; /* 16:9 ratio */
+      height: 0;
+    }
+
+    .video-card iframe,
+    .video-card video {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      border: none;
+      border-radius: 8px;
+      background: black;
+    }
+
+    /* Locked video overlay */
+    .locked-video {
+      background: #111;
+      border-radius: 8px;
+      padding: 1rem;
+      position: relative;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.8);
+    }
+
+    .locked-video img {
+      width: 100%;
+      border-radius: 8px;
+      margin-bottom: 0.7rem;
+      cursor: pointer;
+      height: 160px;
+      object-fit: cover;
+      transition: transform 0.3s ease;
+    }
+    .locked-video img:hover {
+      transform: scale(1.03);
+    }
+
+    .locked-video video {
+      display: none;
+      margin-top: 0.7rem;
+      border-radius: 8px;
+      width: 100%;
+      height: 180px;
+      background: black;
+    }
+
+    .locked-video .price {
+      font-weight: bold;
+      color: #e50914;
+      margin-bottom: 0.7rem;
+      text-align: center;
+      font-size: 1.1rem;
+    }
+
+    .locked-video input[type="password"] {
+      width: 100%;
+      padding: 0.5rem;
+      font-size: 1rem;
+      border-radius: 4px;
+      border: none;
+      margin-bottom: 0.5rem;
+      outline: none;
+      box-sizing: border-box;
+    }
+
+    .locked-video button.submit-pass-btn {
+      width: 100%;
+      padding: 0.5rem;
+      background-color: #e50914;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      font-weight: 600;
+      cursor: pointer;
+      margin-bottom: 0.5rem;
+      transition: background-color 0.3s ease;
+    }
+    .locked-video button.submit-pass-btn:hover {
+      background-color: #f40612;
+    }
+
+    .locked-video button.pay-btn {
+      width: 100%;
+      padding: 0.5rem;
+      background-color: #222;
+      color: #e50914;
+      border: 2px solid #e50914;
+      border-radius: 4px;
+      font-weight: 600;
+      cursor: pointer;
+      margin-bottom: 0.5rem;
+      transition: background-color 0.3s ease, color 0.3s ease;
+    }
+    .locked-video button.pay-btn:hover {
+      background-color: #e50914;
+      color: white;
+    }
+
+    .locked-video #unlockMsg {
+      margin-top: 0.5rem;
+      min-height: 1.2em;
+      font-weight: 600;
+      text-align: center;
+    }
+
+    /* Payment Modal */
+    #paymentModal {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(0,0,0,0.85);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 100;
+      padding: 1rem;
+      box-sizing: border-box;
+    }
+    #paymentModal.active {
+      display: flex;
+    }
+    #paymentContent {
+      background: #222;
+      padding: 2rem;
+      border-radius: 10px;
+      max-width: 400px;
+      width: 100%;
+      text-align: center;
+      color: white;
+      box-shadow: 0 0 15px #e50914;
+    }
+    #paymentContent h3 {
+      margin-top: 0;
+      color: #e50914;
+    }
+    #paymentContent img {
+      max-width: 250px;
+      margin: 1rem 0;
+      border-radius: 8px;
+      box-shadow: 0 0 8px #e50914;
+    }
+    #paymentContent p {
+      margin-bottom: 1rem;
+      font-weight: 500;
+    }
+    #paymentContent .warning {
+      margin-top: 1rem;
+      padding: 0.8rem;
+      background: #660000;
+      border-radius: 6px;
+      font-weight: 600;
+      color: #ff6666;
+      border: 1.5px solid #ff3333;
+    }
+    #paymentContent button.closeBtn {
+      background: #e50914;
+      border: none;
+      color: white;
+      padding: 0.5rem 1.2rem;
+      font-weight: 600;
+      cursor: pointer;
+      border-radius: 5px;
+      margin-top: 1rem;
+      transition: background-color 0.3s ease;
+    }
+    #paymentContent button.closeBtn:hover {
+      background: #f40612;
+    }
+
+    /* Responsive */
+    @media (max-width: 600px) {
+      .videos-grid {
+        grid-template-columns: 1fr;
+      }
+      #paymentContent {
+        max-width: 90vw;
+      }
+      header {
+        flex-wrap: wrap;
+        gap: 1rem;
+      }
+      .nav-buttons {
+        flex: 1 1 100%;
+        justify-content: center;
+      }
+    }
+  </style>
 </head>
 <body>
+  <header>
+    <!-- Login Button with SpyFlix logo merged -->
+    <button id="loginBtn" onclick="alert('Login feature coming soon!')" aria-label="Login to SpyFlix">
+      <!-- SpyFlix SVG logo - simple 'S' shaped flame -->
+      <svg viewBox="0 0 64 64" aria-hidden="true" focusable="false" >
+        <path d="M32 2C22 16 18 29 18 42c0 11 9 20 14 20s14-9 14-20c0-13-10-30-14-40z" />
+      </svg>
+      SpyFlix Login
+    </button>
 
-<nav>
-  <a href="#" data-target="home">Home</a>
-  <a href="#" data-target="demo-videos">Demo Videos</a>
-  <a href="#" data-target="buy-membership">Buy Membership</a>
-  <a href="#" data-target="faq">FAQ</a>
-  <a href="#" data-target="testimonials">Testimonials</a>
-  <a href="#" data-target="contact">Contact</a>
-</nav>
+    <!-- Navigation buttons separate -->
+    <nav class="nav-buttons" role="navigation" aria-label="Main Navigation">
+      <button onclick="document.getElementById('demoVideos').scrollIntoView({behavior:'smooth'})">Demo Videos</button>
+      <button onclick="document.getElementById('lockedVideos').scrollIntoView({behavior:'smooth'})">Locked Videos</button>
+    </nav>
+  </header>
 
-<main>
-  <!-- Home page -->
-  <section id="home" class="page active">
-    <h1>Welcome to Sleeping Content</h1>
-    <div class="welcome-note">
-      Access exclusive content on Telegram with simple membership plans.
-    </div>
-    <div class="btn-group">
-      <button id="go-demo">Demo Videos</button>
-      <button id="go-buy">Buy Membership</button>
-    </div>
-    <div class="warning-note">
-      ⚠️ Please take a screenshot after payment and upload it on the next page.
-    </div>
-  </section>
-
-  <!-- Demo Videos page -->
-  <section id="demo-videos" class="page">
-    <h2>Demo Videos Showcase</h2>
-    <div style="display:grid; grid-template-columns: repeat(auto-fit,minmax(300px,1fr)); gap: 1rem;">
-      <iframe width="100%" height="180" src="https://streama2z.pro/u9746k4bmzd3/VID_20250605_110929_227.mp4" frameborder="0" allowfullscreen></iframe>
-      <iframe width="100%" height="180" src="https://streama2z.pro/805apmkd5yi1/VID_20250605_173204_764.mp4l" frameborder="0" allowfullscreen></iframe>
-      <iframe width="100%" height="180" src="https://streama2z.pro/ai6hjt926oyw/VID_20250605_173212_775.mp4" frameborder="0" allowfullscreen></iframe>
-      <iframe width="100%" height="180" src="https://streama2z.pro/1dkn61ikv33u/VID_20250605_110931_572.mp4" frameborder="0" allowfullscreen></iframe>
-    </div>
-    <button style="margin-top: 2rem;" id="back-home-from-demo">Back Home</button>
-  </section>
-
-  <!-- Buy Membership page -->
-  <section id="buy-membership" class="page">
-    <h2>Buy Membership</h2>
-    <p style="text-align:center; font-weight: 600; margin-bottom: 1em; color: #79c0ff;">
-      Choose your plan and pay ₹300/month or ₹600 for lifetime access.
-    </p>
-
-    <div id="payment-options">
-      <div class="payment-option" data-price="300" data-type="monthly">
-        ₹300 - Monthly Membership
+  <main>
+    <section id="demoVideos">
+      <h2>🎬 Demo Videos (Free to Watch)</h2>
+      <div class="videos-grid">
+        <div class="video-card">
+        <iframe allow="fullscreen" allowfullscreen height="400" src="https://streamable.com/e/ux528m?" width="256" style="border:none;"></iframe>
       </div>
-      <div class="payment-option" data-price="600" data-type="lifetime">
-        ₹600 - Lifetime Membership
+        <div class="video-card">
+         <iframe allow="fullscreen" allowfullscreen height="352" src="https://streamable.com/e/aq12xb?" width="640" style="border:none;"></iframe>
+        </div>
+         <div class="video-card">
+         <iframe allow="fullscreen" allowfullscreen height="848" src="https://streamable.com/e/z1prtm?" width="464" style="border:none;"></iframe>
+         </div>
+         <div class="video-card">
+         <iframe allow="fullscreen" allowfullscreen height="1280" src="https://streamable.com/e/ruvhfb?" width="720" style="border:none;"></iframe>
+         </div>
+         <div class="video-card">
+         <iframe allow="fullscreen" allowfullscreen height="854" src="https://streamable.com/e/1d3fja?" width="480" style="border:none;"></iframe>
+         </div>
+         <div class="videos-card">
+         <iframe allow="fullscreen" allowfullscreen height="624" src="https://streamable.com/e/h48lc3?" width="352" style="border:none;"></iframe>
+         </div>
+    </section>
+
+    <section id="lockedVideos" style="margin-top: 3rem;">
+      <h2>🔒 Locked Videos (₹100 each to Unlock)</h2>
+      <div class="videos-grid">
+        <!-- Video 1 -->
+        <div class="locked-video" data-password="PASS123" data-video-src="ht">
+          <img src="https://i.postimg.cc/DwLsWHNs/images.jpg" alt="Locked Video 1" title="Click to pay and unlock" />
+          <div class="price">Price: ₹100</div>
+          <button class="pay-btn">Pay ₹100 & Get Password</button>
+          <input type="password" placeholder="Enter unlock password" aria-label="Password to unlock Video 1"/>
+          <button class="submit-pass-btn">Unlock Video</button>
+          <div id="unlockMsg"></div>
+          <video controls></video>
+        </div>
+
+        <!-- Video 2 -->
+        <div class="locked-video" data-password="PASS456" data-video-src="https://www.w3schools.com/html/movie.mp4#t=45,75">
+          <img src="https://i.postimg.cc/DwLsWHNs/images.jpg" alt="Locked Video 2" title="Click to pay and unlock" />
+          <div class="price">Price: ₹100</div>
+          <button class="pay-btn">Pay ₹100 & Get Password</button>
+          <input type="password" placeholder="Enter unlock password" aria-label="Password to unlock Video 2" />
+          <button class="submit-pass-btn">Unlock Video</button>
+          <div id="unlockMsg"></div>
+          <video controls></video>
+        </div>
+
+        <!-- Video 3 -->
+        <div class="locked-video" data-password="PASS789" data-video-src="https://interactive-examples.mdn.mozilla.net/media/cc0-videos/bee.webm#t=20,50">
+          <img src="https://i.postimg.cc/DwLsWHNs/images.jpg" alt="Locked Video 3" title="Click to pay and unlock" />
+          <div class="price">Price: ₹100</div>
+          <button class="pay-btn">Pay ₹100 & Get Password</button>
+          <input type="password" placeholder="Enter unlock password" aria-label="Password to unlock Video 3" />
+          <button class="submit-pass-btn">Unlock Video</button>
+          <div id="unlockMsg"></div>
+          <video controls></video>
+        </div>
+
+        <!-- Video 4 -->
+        <div class="locked-video" data-password="PASS000" data-video-src="https://interactive-examples.mdn.mozilla.net/media/cc0-videos/butterfly.webm#t=10,40">
+          <img src="https://i.postimg.cc/DwLsWHNs/images.jpg" alt="Locked Video 4" title="Click to pay and unlock" />
+          <div class="price">Price: ₹100</div>
+          <button class="pay-btn">Pay ₹100 & Get Password</button>
+          <input type="password" placeholder="Enter unlock password" aria-label="Password to unlock Video 4" />
+          <button class="submit-pass-btn">Unlock Video</button>
+          <div id="unlockMsg"></div>
+          <video controls></video>
+        </div>
+
+        <!-- Video 5 -->
+        <div class="locked-video" data-password="PASS555" data-video-src="https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.webm#t=15,45">
+          <img src="https://i.postimg.cc/DwLsWHNs/images.jpg" alt="Locked Video 5" title="Click to pay and unlock" />
+          <div class="price">Price: ₹100</div>
+          <button class="pay-btn">Pay ₹100 & Get Password</button>
+          <input type="password" placeholder="Enter unlock password" aria-label="Password to unlock Video 5" />
+          <button class="submit-pass-btn">Unlock Video</button>
+          <div id="unlockMsg"></div>
+          <video controls></video>
+        </div>
+        
+          <!-- Video 6 -->
+        <div class="locked-video" data-password="PASS555" data-video-src="https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.webm#t=15,45">
+          <img src="https://i.postimg.cc/DwLsWHNs/images.jpg" alt="Locked Video 5" title="Click to pay and unlock" />
+          <div class="price">Price: ₹100</div>
+          <button class="pay-btn">Pay ₹100 & Get Password</button>
+          <input type="password" placeholder="Enter unlock password" aria-label="Password to unlock Video 5" />
+          <button class="submit-pass-btn">Unlock Video</button>
+          <div id="unlockMsg"></div>
+          <video controls></video>
+        </div>
+        
+ <!-- Video 7 -->
+        <div class="locked-video" data-password="PASS555" data-video-src="https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.webm#t=15,45">
+          <img src="https://i.postimg.cc/DwLsWHNs/images.jpg" alt="Locked Video 5" title="Click to pay and unlock" />
+          <div class="price">Price: ₹100</div>
+          <button class="pay-btn">Pay ₹100 & Get Password</button>
+          <input type="password" placeholder="Enter unlock password" aria-label="Password to unlock Video 5" />
+          <button class="submit-pass-btn">Unlock Video</button>
+          <div id="unlockMsg"></div>
+          <video controls></video>
+        </div>
+        
+ <!-- Video 8 -->
+        <div class="locked-video" data-password="PASS555" data-video-src="https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.webm#t=15,45">
+          <img src="https://i.postimg.cc/DwLsWHNs/images.jpg" alt="Locked Video 5" title="Click to pay and unlock" />
+          <div class="price">Price: ₹100</div>
+          <button class="pay-btn">Pay ₹100 & Get Password</button>
+          <input type="password" placeholder="Enter unlock password" aria-label="Password to unlock Video 5" />
+          <button class="submit-pass-btn">Unlock Video</button>
+          <div id="unlockMsg"></div>
+          <video controls></video>
+        </div>
       </div>
+    </section>
+  </main>
+
+  <!-- Payment Modal -->
+  <div id="paymentModal" role="dialog" aria-modal="true" aria-labelledby="paymentTitle" tabindex="-1">
+    <div id="paymentContent">
+      <h3 id="paymentTitle">Payment Instructions</h3>
+      <p>To unlock this video, please pay ₹100 using UPI:</p>
+      <p><strong>UPI ID:</strong> Dhamapayhere@fam</p>
+      <img src="https://i.postimg.cc/fWpKxr4B/Screenshot-20250206-190148-Fam-App.jpg" alt="Scan QR code to pay" />
+      <p>After payment, you will receive the unlock password via Telegram or email.</p>
+      <div class="warning">
+        ⚠️ Please send your <strong>payment screenshot</strong> to Telegram ID <strong>@sleepyspybot</strong> to receive the password for unlocking the video.
+      </div>
+      <button class="closeBtn" onclick="closePaymentModal()">Close</button>
     </div>
+  </div>
 
-    <div class="payment-instructions" id="payment-instructions" style="display:none;">
-      <p>Pay via UPI ID or scan QR code:</p>
-      <p><strong>UPI ID:</strong> <code>Dhamapayhere@fam</code></p>
-      <img src="https://i.postimg.cc/fWpKxr4B/Screenshot-20250206-190148-Fam-App.jpg" alt="UPI QR Code" class="qr-code" />
-      <p>Or use <a href="https://phonepe.com/upipay?pa=Dhamapayhere@fam&am=300" target="_blank" style="color:#58a6ff;">PhonePe UPI Payment Link</a></p>
-      <p class="warning-note">After payment, take a screenshot and upload below.</p>
-    </div>
+  <script>
+    // Show Payment Modal on pay-btn click
+    document.querySelectorAll('.locked-video').forEach(lv => {
+      const payBtn = lv.querySelector('.pay-btn');
+      const submitBtn = lv.querySelector('.submit-pass-btn');
+      const input = lv.querySelector('input[type="password"]');
+      const unlockMsg = lv.querySelector('#unlockMsg');
+      const videoElem = lv.querySelector('video');
+      const imgElem = lv.querySelector('img');
+      const priceElem = lv.querySelector('.price');
 
-    <div class="upload-section" id="upload-section" style="display:none;">
-      <label for="screenshot-upload" style="font-weight: 600;">Upload Payment Screenshot:</label><br />
-      <input type="file" id="screenshot-upload" accept="image/*" />
-      <button id="submit-upload" style="margin-top: 1em;">Submit</button>
-    </div>
+      payBtn.addEventListener('click', () => {
+        // Show payment modal
+        currentLockedVideo = lv; // save ref to this video
+        showPaymentModal();
+      });
 
-    <div id="confirmation-message" style="display:none; margin-top: 2em; text-align:center; color:#39d353; font-weight:bold;">
-      Thank you for your payment! You will be redirected to the Telegram group shortly...
-    </div>
-
-    <button style="margin-top: 2rem;" id="back-home-from-buy">Back Home</button>
-  </section>
-
-  <!-- FAQ page -->
-  <section id="faq" class="page">
-    <h2>Frequently Asked Questions</h2>
-    <ul>
-      <li><strong>How do I pay?</strong> Use the UPI ID or QR code provided on the Buy Membership page.</li>
-      <li><strong>What plans are available?</strong> Monthly membership for ₹300 and lifetime for ₹600.</li>
-      <li><strong>How do I upload proof?</strong> After payment, take a screenshot and upload it on the payment page.</li>
-      <li><strong>How do I get access?</strong> After payment and upload, you'll get a link or redirect to Telegram group.</li>
-      <li><strong>Is my data safe?</strong> We only use your screenshot for verification and do not store data permanently.</li>
-    </ul>
-    <button style="margin-top: 2rem;" id="back-home-from-faq">Back Home</button>
-  </section>
-
-  <!-- Testimonials page -->
-  <section id="testimonials" class="page">
-    <h2>What Our Members Say</h2>
-    <div style="max-width:600px; margin:auto;">
-      <blockquote style="background:#161b22; padding:1em; border-radius:10px; box-shadow:0 0 10px #58a6ff; margin-bottom: 1em;">
-        "Great content and easy payment process. Highly recommended!" -- Rahul K.
-      </blockquote>
-      <blockquote style="background:#161b22; padding:1em; border-radius:10px; box-shadow:0 0 10px #58a6ff; margin-bottom: 1em;">
-        "The Telegram group is amazing, and support was quick to respond." -- Sneha P.
-      </blockquote>
-      <blockquote style="background:#161b22; padding:1em; border-radius:10px; box-shadow:0 0 10px #58a6ff;">
-        "Best membership site I've used. Clean design and smooth process." -- Anil T.
-      </blockquote>
-    </div>
-    <button style="margin-top: 2rem;" id="back-home-from-testimonials">Back Home</button>
-  </section>
-
-  <!-- Contact page -->
-  <section id="contact" class="page">
-    <h2>Contact & Support</h2>
-    <p>If you have any issues or questions, reach out via Telegram:</p>
-    <p style="text-align:center; font-weight: 700; font-size: 1.2rem; color: #58a6ff;">
-      <a href="https://t.me/sleepyspybot" target="_blank" style="color:#58a6ff;">@sleepyspybot</a>
-    </p>
-    <button style="margin-top: 2rem;" id="back-home-from-contact">Back Home</button>
-  </section>
-</main>
-
-<script>
-  // Navigation & page display logic
-  const navLinks = document.querySelectorAll('nav a');
-  const pages = document.querySelectorAll('.page');
-
-  function showPage(id) {
-    pages.forEach(page => {
-      page.classList.toggle('active', page.id === id);
+      submitBtn.addEventListener('click', () => {
+        const correctPassword = lv.getAttribute('data-password');
+        const entered = input.value.trim();
+        if (entered === '') {
+          unlockMsg.style.color = '#ff5555';
+          unlockMsg.textContent = 'Please enter a password.';
+          return;
+        }
+        if (entered === correctPassword) {
+          unlockMsg.style.color = '#4caf50';
+          unlockMsg.textContent = 'Password correct! Enjoy your video.';
+          videoElem.style.display = 'block';
+          videoElem.src = lv.getAttribute('data-video-src');
+          input.style.display = 'none';
+          submitBtn.style.display = 'none';
+          payBtn.style.display = 'none';
+          priceElem.style.display = 'none';
+          imgElem.style.display = 'none';
+        } else {
+          unlockMsg.style.color = '#ff5555';
+          unlockMsg.textContent = 'Incorrect password. Please try again.';
+        }
+      });
     });
-  }
 
-  navLinks.forEach(link => {
-    link.addEventListener('click', (e) => {
-      e.preventDefault();
-      const target = link.getAttribute('data-target');
-      showPage(target);
-    });
-  });
+    // Payment Modal functions
+    const paymentModal = document.getElementById('paymentModal');
+    let currentLockedVideo = null;
 
-  // Buttons on home page
-  document.getElementById('go-demo').onclick = () => showPage('demo-videos');
-  document.getElementById('go-buy').onclick = () => showPage('buy-membership');
-
-  // Back buttons
-  document.getElementById('back-home-from-demo').onclick = () => showPage('home');
-  document.getElementById('back-home-from-buy').onclick = () => showPage('home');
-  document.getElementById('back-home-from-faq').onclick = () => showPage('home');
-  document.getElementById('back-home-from-testimonials').onclick = () => showPage('home');
-  document.getElementById('back-home-from-contact').onclick = () => showPage('home');
-
-  // Payment option selection
-  const paymentOptions = document.querySelectorAll('.payment-option');
-  const paymentInstructions = document.getElementById('payment-instructions');
-  const uploadSection = document.getElementById('upload-section');
-  let selectedPlan = null;
-
-  paymentOptions.forEach(option => {
-    option.addEventListener('click', () => {
-      paymentOptions.forEach(opt => opt.classList.remove('selected'));
-      option.classList.add('selected');
-      selectedPlan = option.getAttribute('data-price');
-      paymentInstructions.style.display = 'block';
-      uploadSection.style.display = 'block';
-    });
-  });
-
-  // Upload & Submit logic
-  document.getElementById('submit-upload').onclick = () => {
-    const fileInput = document.getElementById('screenshot-upload');
-    if (!fileInput.files.length) {
-      alert('Please upload a payment screenshot before submitting.');
-      return;
+    function showPaymentModal() {
+      paymentModal.classList.add('active');
+      paymentModal.focus();
     }
-    // Simulate upload delay
-    document.getElementById('confirmation-message').style.display = 'block';
-    uploadSection.style.display = 'none';
-    paymentInstructions.style.display = 'none';
+    function closePaymentModal() {
+      paymentModal.classList.remove('active');
+    }
 
-    setTimeout(() => {
-      // Redirect to telegram group
-      window.location.href = 'https://t.me/sleepyspybot';
-    }, 3000);
-  };
-</script>
-
+    // Close modal on Escape key
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && paymentModal.classList.contains('active')) {
+        closePaymentModal();
+      }
+    });
+  </script>
 </body>
 </html>
