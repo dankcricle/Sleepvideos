@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Membership Site Demo</title>
+<style>
+  /* Basic reset and fonts */
+  body, html {
+    margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: #0d1117;
+    color: #c9d1d9;
+  }
+  nav {
+    background: #161b22;
+    padding: 1em 2em;
+    display: flex;
+    gap: 1.5em;
+  }
+  nav a {
+    color: #58a6ff;
+    text-decoration: none;
+    font-weight: 600;
+  }
+  nav a:hover {
+    text-decoration: underline;
+  }
+  main {
+    max-width: 700px;
+    margin: 2em auto;
+    padding: 0 1em;
+  }
+  h1 {
+    font-size: 2.5rem;
+    text-align: center;
+    color: #79c0ff;
+    text-shadow: 0 0 8px #79c0ff;
+  }
+  .welcome-note {
+    margin-top: 1rem;
+    color: #39d353;
+    text-align: center;
+    font-weight: bold;
+    font-size: 1.2rem;
+    text-shadow: 0 0 6px #39d353;
+  }
+  .btn-group {
+    margin: 2rem 0;
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+  }
+  button {
+    padding: 1em 2em;
+    font-size: 1.2rem;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    font-weight: 700;
+    color: #0d1117;
+    background: #79c0ff;
+    box-shadow: 0 0 8px #79c0ff;
+    transition: background 0.3s ease;
+  }
+  button:hover {
+    background: #388bfd;
+  }
+  /* Pages hidden by default */
+  .page {
+    display: none;
+  }
+  .page.active {
+    display: block;
+  }
+  /* Payment options styling */
+  .payment-option {
+    border: 2px solid #58a6ff;
+    border-radius: 10px;
+    padding: 1.2em;
+    margin: 1em 0;
+    cursor: pointer;
+    user-select: none;
+    transition: background 0.3s, box-shadow 0.3s;
+  }
+  .payment-option.selected {
+    background: #58a6ff;
+    color: #0d1117;
+    box-shadow: 0 0 12px #58a6ff;
+  }
+  .upload-section {
+    margin-top: 1.5em;
+  }
+  input[type="file"] {
+    margin-top: 0.5em;
+  }
+  .qr-code {
+    display: block;
+    margin: 1em auto;
+    max-width: 200px;
+    border-radius: 12px;
+    box-shadow: 0 0 10px #79c0ff;
+  }
+  .payment-instructions {
+    text-align: center;
+    font-weight: 600;
+    margin-top: 1em;
+    color: #79c0ff;
+  }
+  .footer {
+    text-align: center;
+    margin-top: 3em;
+    color: #484f58;
+    font-size: 0.9rem;
+  }
+  .warning-note {
+    text-align: center;
+    color: #f0a500;
+    font-weight: 700;
+    margin-top: 1em;
+    text-shadow: 0 0 6px #f0a500;
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="#" data-target="home">Home</a>
+  <a href="#" data-target="demo-videos">Demo Videos</a>
+  <a href="#" data-target="buy-membership">Buy Membership</a>
+  <a href="#" data-target="faq">FAQ</a>
+  <a href="#" data-target="testimonials">Testimonials</a>
+  <a href="#" data-target="contact">Contact</a>
+</nav>
+
+<main>
+  <!-- Home page -->
+  <section id="home" class="page active">
+    <h1>Welcome to Sleeping Content</h1>
+    <div class="welcome-note">
+      Access exclusive content on Telegram with simple membership plans.
+    </div>
+    <div class="btn-group">
+      <button id="go-demo">Demo Videos</button>
+      <button id="go-buy">Buy Membership</button>
+    </div>
+    <div class="warning-note">
+      ⚠️ Please take a screenshot after payment and upload it on the next page.
+    </div>
+  </section>
+
+  <!-- Demo Videos page -->
+  <section id="demo-videos" class="page">
+    <h2>Demo Videos Showcase</h2>
+    <div style="display:grid; grid-template-columns: repeat(auto-fit,minmax(300px,1fr)); gap: 1rem;">
+      <iframe width="100%" height="180" src="https://streama2z.pro/u9746k4bmzd3/VID_20250605_110929_227.mp4" frameborder="0" allowfullscreen></iframe>
+      <iframe width="100%" height="180" src="https://streama2z.pro/805apmkd5yi1/VID_20250605_173204_764.mp4l" frameborder="0" allowfullscreen></iframe>
+      <iframe width="100%" height="180" src="https://streama2z.pro/ai6hjt926oyw/VID_20250605_173212_775.mp4" frameborder="0" allowfullscreen></iframe>
+      <iframe width="100%" height="180" src="https://streama2z.pro/1dkn61ikv33u/VID_20250605_110931_572.mp4" frameborder="0" allowfullscreen></iframe>
+    </div>
+    <button style="margin-top: 2rem;" id="back-home-from-demo">Back Home</button>
+  </section>
+
+  <!-- Buy Membership page -->
+  <section id="buy-membership" class="page">
+    <h2>Buy Membership</h2>
+    <p style="text-align:center; font-weight: 600; margin-bottom: 1em; color: #79c0ff;">
+      Choose your plan and pay ₹300/month or ₹600 for lifetime access.
+    </p>
+
+    <div id="payment-options">
+      <div class="payment-option" data-price="300" data-type="monthly">
+        ₹300 - Monthly Membership
+      </div>
+      <div class="payment-option" data-price="600" data-type="lifetime">
+        ₹600 - Lifetime Membership
+      </div>
+    </div>
+
+    <div class="payment-instructions" id="payment-instructions" style="display:none;">
+      <p>Pay via UPI ID or scan QR code:</p>
+      <p><strong>UPI ID:</strong> <code>Dhamapayhere@fam</code></p>
+      <img src="https://i.postimg.cc/fWpKxr4B/Screenshot-20250206-190148-Fam-App.jpg" alt="UPI QR Code" class="qr-code" />
+      <p>Or use <a href="https://phonepe.com/upipay?pa=Dhamapayhere@fam&am=300" target="_blank" style="color:#58a6ff;">PhonePe UPI Payment Link</a></p>
+      <p class="warning-note">After payment, take a screenshot and upload below.</p>
+    </div>
+
+    <div class="upload-section" id="upload-section" style="display:none;">
+      <label for="screenshot-upload" style="font-weight: 600;">Upload Payment Screenshot:</label><br />
+      <input type="file" id="screenshot-upload" accept="image/*" />
+      <button id="submit-upload" style="margin-top: 1em;">Submit</button>
+    </div>
+
+    <div id="confirmation-message" style="display:none; margin-top: 2em; text-align:center; color:#39d353; font-weight:bold;">
+      Thank you for your payment! You will be redirected to the Telegram group shortly...
+    </div>
+
+    <button style="margin-top: 2rem;" id="back-home-from-buy">Back Home</button>
+  </section>
+
+  <!-- FAQ page -->
+  <section id="faq" class="page">
+    <h2>Frequently Asked Questions</h2>
+    <ul>
+      <li><strong>How do I pay?</strong> Use the UPI ID or QR code provided on the Buy Membership page.</li>
+      <li><strong>What plans are available?</strong> Monthly membership for ₹300 and lifetime for ₹600.</li>
+      <li><strong>How do I upload proof?</strong> After payment, take a screenshot and upload it on the payment page.</li>
+      <li><strong>How do I get access?</strong> After payment and upload, you'll get a link or redirect to Telegram group.</li>
+      <li><strong>Is my data safe?</strong> We only use your screenshot for verification and do not store data permanently.</li>
+    </ul>
+    <button style="margin-top: 2rem;" id="back-home-from-faq">Back Home</button>
+  </section>
+
+  <!-- Testimonials page -->
+  <section id="testimonials" class="page">
+    <h2>What Our Members Say</h2>
+    <div style="max-width:600px; margin:auto;">
+      <blockquote style="background:#161b22; padding:1em; border-radius:10px; box-shadow:0 0 10px #58a6ff; margin-bottom: 1em;">
+        "Great content and easy payment process. Highly recommended!" -- Rahul K.
+      </blockquote>
+      <blockquote style="background:#161b22; padding:1em; border-radius:10px; box-shadow:0 0 10px #58a6ff; margin-bottom: 1em;">
+        "The Telegram group is amazing, and support was quick to respond." -- Sneha P.
+      </blockquote>
+      <blockquote style="background:#161b22; padding:1em; border-radius:10px; box-shadow:0 0 10px #58a6ff;">
+        "Best membership site I've used. Clean design and smooth process." -- Anil T.
+      </blockquote>
+    </div>
+    <button style="margin-top: 2rem;" id="back-home-from-testimonials">Back Home</button>
+  </section>
+
+  <!-- Contact page -->
+  <section id="contact" class="page">
+    <h2>Contact & Support</h2>
+    <p>If you have any issues or questions, reach out via Telegram:</p>
+    <p style="text-align:center; font-weight: 700; font-size: 1.2rem; color: #58a6ff;">
+      <a href="https://t.me/sleepyspybot" target="_blank" style="color:#58a6ff;">@sleepyspybot</a>
+    </p>
+    <button style="margin-top: 2rem;" id="back-home-from-contact">Back Home</button>
+  </section>
+</main>
+
+<script>
+  // Navigation & page display logic
+  const navLinks = document.querySelectorAll('nav a');
+  const pages = document.querySelectorAll('.page');
+
+  function showPage(id) {
+    pages.forEach(page => {
+      page.classList.toggle('active', page.id === id);
+    });
+  }
+
+  navLinks.forEach(link => {
+    link.addEventListener('click', (e) => {
+      e.preventDefault();
+      const target = link.getAttribute('data-target');
+      showPage(target);
+    });
+  });
+
+  // Buttons on home page
+  document.getElementById('go-demo').onclick = () => showPage('demo-videos');
+  document.getElementById('go-buy').onclick = () => showPage('buy-membership');
+
+  // Back buttons
+  document.getElementById('back-home-from-demo').onclick = () => showPage('home');
+  document.getElementById('back-home-from-buy').onclick = () => showPage('home');
+  document.getElementById('back-home-from-faq').onclick = () => showPage('home');
+  document.getElementById('back-home-from-testimonials').onclick = () => showPage('home');
+  document.getElementById('back-home-from-contact').onclick = () => showPage('home');
+
+  // Payment option selection
+  const paymentOptions = document.querySelectorAll('.payment-option');
+  const paymentInstructions = document.getElementById('payment-instructions');
+  const uploadSection = document.getElementById('upload-section');
+  let selectedPlan = null;
+
+  paymentOptions.forEach(option => {
+    option.addEventListener('click', () => {
+      paymentOptions.forEach(opt => opt.classList.remove('selected'));
+      option.classList.add('selected');
+      selectedPlan = option.getAttribute('data-price');
+      paymentInstructions.style.display = 'block';
+      uploadSection.style.display = 'block';
+    });
+  });
+
+  // Upload & Submit logic
+  document.getElementById('submit-upload').onclick = () => {
+    const fileInput = document.getElementById('screenshot-upload');
+    if (!fileInput.files.length) {
+      alert('Please upload a payment screenshot before submitting.');
+      return;
+    }
+    // Simulate upload delay
+    document.getElementById('confirmation-message').style.display = 'block';
+    uploadSection.style.display = 'none';
+    paymentInstructions.style.display = 'none';
+
+    setTimeout(() => {
+      // Redirect to telegram group
+      window.location.href = 'https://t.me/sleepyspybot';
+    }, 3000);
+  };
+</script>
+
+</body>
+</html>
