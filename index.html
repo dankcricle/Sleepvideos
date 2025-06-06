@@ -317,22 +317,22 @@
       <h2>🎬 Demo Videos (Free to Watch)</h2>
       <div class="videos-grid">
         <div class="video-card">
-        <iframe allow="fullscreen" allowfullscreen height="400" src="https://streamable.com/e/ux528m?" width="256" style="border:none;"></iframe>
+        <iframe src="https://streama2z.site/embed-aoiguub768xr.html" scrolling="no" frameborder="0" width="100" height="700" allowfullscreen="true" webkitallowfullscreen="true" mozallowfullscreen="true"></iframe>
       </div>
         <div class="video-card">
-         <iframe allow="fullscreen" allowfullscreen height="352" src="https://streamable.com/e/aq12xb?" width="640" style="border:none;"></iframe>
+     <iframe src="https://streama2z.site/embed-yddlnorjjr8a.html" scrolling="no" frameborder="0" width="700" height="430" allowfullscreen="true" webkitallowfullscreen="true" mozallowfullscreen="true"></iframe>
         </div>
          <div class="video-card">
-         <iframe allow="fullscreen" allowfullscreen height="848" src="https://streamable.com/e/z1prtm?" width="464" style="border:none;"></iframe>
+         <iframe src="https://streama2z.site/embed-1190sm71tja5.html" scrolling="no" frameborder="0" width="700" height="430" allowfullscreen="true" webkitallowfullscreen="true" mozallowfullscreen="true"></iframe>
          </div>
          <div class="video-card">
-         <iframe allow="fullscreen" allowfullscreen height="1280" src="https://streamable.com/e/ruvhfb?" width="720" style="border:none;"></iframe>
+        <iframe src="https://streama2z.site/embed-2q97rtzwrdpr.html" scrolling="no" frameborder="0" width="700" height="430" allowfullscreen="true" webkitallowfullscreen="true" mozallowfullscreen="true"></iframe>
          </div>
          <div class="video-card">
-         <iframe allow="fullscreen" allowfullscreen height="854" src="https://streamable.com/e/1d3fja?" width="480" style="border:none;"></iframe>
+     <iframe src="https://streama2z.site/embed-ic79ar87fes2.html" scrolling="no" frameborder="0" width="700" height="430" allowfullscreen="true" webkitallowfullscreen="true" mozallowfullscreen="true"></iframe>
          </div>
          <div class="videos-card">
-         <iframe allow="fullscreen" allowfullscreen height="624" src="https://streamable.com/e/h48lc3?" width="352" style="border:none;"></iframe>
+         <iframe src="https://streama2z.site/embed-zm93rgl03pup.html" scrolling="no" frameborder="0" width="700" height="430" allowfullscreen="true" webkitallowfullscreen="true" mozallowfullscreen="true"></iframe>
          </div>
     </section>
 
@@ -340,7 +340,7 @@
       <h2>🔒 Locked Videos (₹100 each to Unlock)</h2>
       <div class="videos-grid">
         <!-- Video 1 -->
-        <div class="locked-video" data-password="PASS123" data-video-src="ht">
+        <div class="locked-video" data-password="PASS123" data-video-src="https://server1.filedownloadlink.xyz/187033.mp4">
           <img src="https://i.postimg.cc/DwLsWHNs/images.jpg" alt="Locked Video 1" title="Click to pay and unlock" />
           <div class="price">Price: ₹100</div>
           <button class="pay-btn">Pay ₹100 & Get Password</button>
